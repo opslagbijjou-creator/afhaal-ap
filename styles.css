@@ -1,117 +1,80 @@
-:root{
-  --bg:#0b0f1a;
-  --card:#11182a;
-  --muted:#8ea0c0;
-  --text:#eaf0ff;
-  --accent:#6ee7ff;
-  --accent2:#a78bfa;
-  --ok:#32d583;
-  --danger:#ff5c7a;
-  --border: rgba(255,255,255,.10);
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg,#0f172a,#020617);
+  color: #fff;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:
-    radial-gradient(1200px 600px at 20% 10%, rgba(110,231,255,.10), transparent 55%),
-    radial-gradient(900px 500px at 90% 20%, rgba(167,139,250,.10), transparent 55%),
-    var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+.container {
+  padding: 16px;
+  padding-bottom: 110px;
 }
 
-.container{max-width:520px;margin:auto;padding:16px 16px 110px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.brand{display:flex;gap:10px;align-items:center}
-.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.title{font-weight:800}
-.subtitle{font-size:13px;color:var(--muted)}
-
-.card{
-  background:rgba(17,24,42,.92);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px;
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
-.stack{display:flex;flex-direction:column;gap:12px}
+h1 { margin: 0 0 8px; }
+small { opacity: .7; }
 
-.btn{
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#1a2340;
-  color:white;
-  font-weight:800;
-}
-.btn.primary{
-  background:linear-gradient(135deg, rgba(110,231,255,.22), rgba(167,139,250,.22));
-  border-color: rgba(110,231,255,.30);
-}
-.btn.danger{background:rgba(255,92,122,.18); border-color: rgba(255,92,122,.25)}
-
-.input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#0f172a;
-  color:white;
-  outline:none;
-}
-.label{font-size:12px;color:var(--muted);margin-bottom:6px}
-
-.pill{
-  font-size:12px;padding:6px 10px;
-  border-radius:999px;border:1px solid var(--border);
-  color:var(--muted);
-  max-width: 220px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 6px;
+  margin-bottom: 12px;
 }
 
-.nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(2,6,23,.92);
-  border-top:1px solid var(--border);
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #38bdf8;
+  color: #000;
+  font-weight: 700;
+}
+
+.btn.danger { background:#fb7185; }
+
+.scanBox {
+  height: 160px;
+  background:#000;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.8);
   backdrop-filter: blur(10px);
+  padding: 12px;
 }
-.navInner{
-  max-width:520px;margin:auto;
-  display:flex;gap:8px;padding:10px;
-}
-.navBtn{
-  flex:1;padding:12px;border-radius:12px;
-  background:rgba(255,255,255,.04);
-  color:white;
-  border:1px solid var(--border);
-  font-weight:800;
-}
-.navBtn.active{border-color: rgba(110,231,255,.45)}
 
-.scanBox{
-  height:150px;
-  border-radius:14px;
-  border:2px dashed rgba(110,231,255,.55);
-  background:rgba(0,0,0,.20);
-  overflow:hidden;
-  position:relative;
+.navInner {
+  display: flex;
+  gap: 10px;
 }
-@media (min-width: 480px){ .scanBox{ height:190px; } }
 
-.hint{
-  position:absolute;left:10px;right:10px;bottom:10px;
-  font-size:12px;color:var(--muted);
-  display:flex;justify-content:space-between;gap:8px;
+.navInner button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  background: rgba(255,255,255,.15);
+  color: #fff;
 }
-.ok{color:var(--ok);font-weight:900}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 10px;border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
+
+.navInner button.active {
+  background: #38bdf8;
+  color: #000;
 }
