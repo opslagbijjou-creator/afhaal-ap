@@ -1,80 +1,92 @@
-* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-body {
-  margin: 0;
-  background: linear-gradient(180deg,#0f172a,#020617);
-  color: #fff;
+import { auth } from "./firebase.js";
+
+const root = document.getElementById("app");
+let currentBarcode = null;
+
+/* ================= AUTH ================= */
+
+onAuthStateChanged(auth, user => {
+  if (user) renderScan(user.email);
+  else renderLogin();
+});
+
+function renderLogin(){
+  root.innerHTML = `
+    <div class="container">
+      <div class="card">
+        <h1>🔐 Inloggen</h1>
+
+        <input id="email" class="input" placeholder="Email">
+        <input id="password" class="input" type="password" placeholder="Wachtwoord">
+
+        <button class="btn" onclick="login()">Inloggen</button>
+      </div>
+    </div>
+  `;
 }
 
-.container {
-  padding: 16px;
-  padding-bottom: 110px;
+window.login = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    alert("Login fout: " + e.message);
+  }
+};
+
+window.logout = async () => {
+  await signOut(auth);
+};
+
+/* ================= SCAN ================= */
+
+function renderScan(email){
+  root.innerHTML = `
+    <div class="container">
+      <div class="card">
+        <h1>📦 Inscannen</h1>
+        <small>${email}</small>
+
+        <div id="scanner" class="scanBox"></div>
+
+        <input id="barcode" class="input" placeholder="Barcode" readonly>
+        <input id="name" class="input" placeholder="Naam klant">
+        <input id="location" class="input" placeholder="Vak / locatie">
+
+        <button class="btn" onclick="startScanner()">📷 Scan</button>
+        <button class="btn danger" onclick="logout()">Uitloggen</button>
+      </div>
+    </div>
+  `;
 }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
+/* ================= BARCODE ================= */
 
-h1 { margin: 0 0 8px; }
-small { opacity: .7; }
+window.startScanner = () => {
+  Quagga.init({
+    inputStream: {
+      name: "Live",
+      type: "LiveStream",
+      target: document.querySelector("#scanner"),
+      constraints: { facingMode: "environment" }
+    },
+    decoder: { readers: ["ean_reader","code_128_reader"] }
+  }, err => {
+    if (!err) Quagga.start();
+  });
 
-.input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  margin-top: 6px;
-  margin-bottom: 12px;
-}
-
-.btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  background: #38bdf8;
-  color: #000;
-  font-weight: 700;
-}
-
-.btn.danger { background:#fb7185; }
-
-.scanBox {
-  height: 160px;
-  background:#000;
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 12px;
-}
-
-.nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,.8);
-  backdrop-filter: blur(10px);
-  padding: 12px;
-}
-
-.navInner {
-  display: flex;
-  gap: 10px;
-}
-
-.navInner button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  background: rgba(255,255,255,.15);
-  color: #fff;
-}
-
-.navInner button.active {
-  background: #38bdf8;
-  color: #000;
-}
+  Quagga.onDetected(data => {
+    currentBarcode = data.codeResult.code;
+    document.getElementById("barcode").value = currentBarcode;
+    Quagga.stop();
+    navigator.vibrate?.(150);
+  });
+};
