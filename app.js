@@ -1,18 +1,54 @@
 // =======================
+// AUTH (super simpel)
+// =======================
+function getUserEmail(){
+  return localStorage.getItem("userEmail");
+}
+function setUserEmail(email){
+  localStorage.setItem("userEmail", email);
+}
+function logout(){
+  // stop camera als die draait
+  try { Quagga.stop(); } catch(e) {}
+  localStorage.removeItem("userEmail");
+  showNav(false);
+  setPill("👤");
+  renderLogin();
+}
+window.logout = logout;
+
+// =======================
+// UI HELPERS
+// =======================
+function showNav(show){
+  const nav = document.getElementById("nav");
+  if(nav) nav.style.display = show ? "block" : "none";
+}
+function setPill(text){
+  const pill = document.getElementById("userPill");
+  if(pill) pill.textContent = text;
+}
+function setActive(page){
+  ["scan","pickup","list"].forEach(p=>{
+    document.getElementById("nav-"+p)?.classList.toggle("active", p===page);
+  });
+}
+
+// =======================
 // ROUTING
 // =======================
 window.go = function(page){
+  const user = getUserEmail();
+  if(!user) return renderLogin();
+
+  showNav(true);
+  setPill(user);
+
   setActive(page);
   if(page==="scan") renderScan();
   if(page==="pickup") renderPickup();
   if(page==="list") renderList();
 };
-
-function setActive(page){
-  ["scan","pickup","list"].forEach(p=>{
-    document.getElementById("nav-"+p)?.classList.toggle("active",p===page);
-  });
-}
 
 // =======================
 // DATA (localStorage)
@@ -21,19 +57,52 @@ function getItems(){
   return JSON.parse(localStorage.getItem("items")||"[]");
 }
 function saveItems(items){
-  localStorage.setItem("items",JSON.stringify(items));
+  localStorage.setItem("items", JSON.stringify(items));
 }
+
+// =======================
+// LOGIN PAGE
+// =======================
+function renderLogin(){
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div class="card stack">
+      <div class="title">🔐 Inloggen</div>
+      <div class="subtitle" style="color:var(--muted)">Vul je email in (demo). Daarna zie je de app.</div>
+
+      <div>
+        <div class="label">Email</div>
+        <input id="loginEmail" class="input" placeholder="bijv. folkert@test.nl" />
+      </div>
+
+      <button class="btn primary" onclick="doLogin()">Inloggen</button>
+    </div>
+  `;
+  showNav(false);
+}
+
+window.doLogin = function(){
+  const email = document.getElementById("loginEmail")?.value?.trim();
+  if(!email) return alert("Vul email in");
+  setUserEmail(email);
+  go("scan");
+};
 
 // =======================
 // SCANNER (Quagga2)
 // =======================
 let currentBarcode = null;
 
+function setMsg(text){
+  const el = document.getElementById("msg");
+  if(el) el.textContent = text;
+}
+
 window.startScanner = function(){
   const target = document.querySelector("#scanner");
   if(!target) return alert("Scanner container niet gevonden");
 
-  // Belangrijk: voorkom dubbele listeners
+  // voorkom dubbele listeners
   try { Quagga.offDetected(onDetected); } catch(e) {}
 
   Quagga.init({
@@ -53,45 +122,40 @@ window.startScanner = function(){
   Quagga.onDetected(onDetected);
 };
 
-window.stopScanner = function(){
-  try { Quagga.stop(); } catch(e) {}
-  setMsg("Scan gestopt");
-};
-
 function onDetected(data){
   const code = data?.codeResult?.code;
   if(!code) return;
 
   currentBarcode = code;
-
   const barcodeEl = document.getElementById("barcode");
   if(barcodeEl) barcodeEl.value = currentBarcode;
 
-  // stop scan meteen
   try { Quagga.stop(); } catch(e) {}
 
-  // auto-scroll naar formulier zodat je NIET hoeft te scrollen
   document.getElementById("form")?.scrollIntoView({ behavior:"smooth", block:"start" });
-
-  // focus naar naam veld
   setTimeout(()=> document.getElementById("name")?.focus(), 250);
 
-  // kleine feedback (iPhone trilling als mogelijk)
   try { navigator.vibrate?.(50); } catch(e) {}
-
   setMsg("Gescand ✅ Vul naam + vak in");
-}
-
-function setMsg(text){
-  const el = document.getElementById("msg");
-  if(el) el.textContent = text;
 }
 
 // =======================
 // PAGES
 // =======================
+function renderTopActions(){
+  return `
+    <div class="card stack">
+      <div class="row" style="display:flex;gap:10px">
+        <button class="btn danger" onclick="logout()">Uitloggen</button>
+      </div>
+    </div>
+  `;
+}
+
 function renderScan(){
   document.getElementById("app").innerHTML = `
+    ${renderTopActions()}
+
     <div class="card stack">
       <div class="scanBox" id="scanner">
         <div class="hint">
@@ -134,7 +198,6 @@ window.saveItem = function(){
 
   const items = getItems();
 
-  // als barcode al bestaat en nog stored is: update ipv dubbel
   const existing = items.find(i => i.barcode === currentBarcode && i.status === "stored");
   if(existing){
     existing.name = name;
@@ -146,13 +209,13 @@ window.saveItem = function(){
       name,
       location,
       status: "stored",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      createdBy: getUserEmail()
     });
   }
 
   saveItems(items);
 
-  // reset form voor volgende scan
   document.getElementById("barcode").value = "";
   document.getElementById("name").value = "";
   document.getElementById("location").value = "";
@@ -164,6 +227,8 @@ window.saveItem = function(){
 
 function renderPickup(){
   document.getElementById("app").innerHTML = `
+    ${renderTopActions()}
+
     <div class="card stack">
       <div class="title">✅ Afgeven</div>
       <div class="subtitle" style="color:var(--muted)">Scan barcode → toon vak → markeer afgegeven</div>
@@ -235,6 +300,7 @@ window.markPickedUp = function(barcodeEnc){
 
   item.status = "picked_up";
   item.pickedUpAt = new Date().toISOString();
+  item.pickedUpBy = getUserEmail();
   saveItems(items);
 
   alert("Afgegeven ✅");
@@ -245,6 +311,8 @@ function renderList(){
   const items = getItems();
 
   document.getElementById("app").innerHTML = `
+    ${renderTopActions()}
+
     <div class="card stack">
       <div class="title">📋 Lijst</div>
       <div class="subtitle" style="color:var(--muted)">In voorraad & afgegeven</div>
@@ -276,4 +344,11 @@ function escapeHtml(str){
 }
 
 // START
-go("scan");
+const existing = getUserEmail();
+if(existing){
+  showNav(true);
+  setPill(existing);
+  go("scan");
+} else {
+  renderLogin();
+}

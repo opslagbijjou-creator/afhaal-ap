@@ -25,10 +25,7 @@ body{
 .container{max-width:520px;margin:auto;padding:16px 16px 110px}
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .brand{display:flex;gap:10px;align-items:center}
-.logo{
-  width:36px;height:36px;border-radius:10px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
 .title{font-weight:800}
 .subtitle{font-size:13px;color:var(--muted)}
 
@@ -71,6 +68,10 @@ body{
   font-size:12px;padding:6px 10px;
   border-radius:999px;border:1px solid var(--border);
   color:var(--muted);
+  max-width: 220px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .nav{
@@ -92,18 +93,15 @@ body{
 }
 .navBtn.active{border-color: rgba(110,231,255,.45)}
 
-/* --- FIX: scanner klein + alles in 1 scherm --- */
 .scanBox{
-  height: 150px;              /* kleiner dan eerst */
+  height:150px;
   border-radius:14px;
   border:2px dashed rgba(110,231,255,.55);
   background:rgba(0,0,0,.20);
   overflow:hidden;
   position:relative;
 }
-@media (min-width: 480px){
-  .scanBox{ height: 190px; }
-}
+@media (min-width: 480px){ .scanBox{ height:190px; } }
 
 .hint{
   position:absolute;left:10px;right:10px;bottom:10px;
