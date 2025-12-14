@@ -147,3 +147,84 @@ small { opacity: .7; }
   border-radius:18px !important;
   background: rgba(255,255,255,.05) !important;
 }
+/* ===== Topbar (zoals je screenshot) ===== */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.brandLeft{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.brandMark{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  background: linear-gradient(135deg, rgba(56,189,248,1), rgba(167,139,250,1));
+  box-shadow: 0 12px 28px rgba(56,189,248,.20);
+  flex:0 0 auto;
+}
+
+.brandText{min-width:0;}
+.brandName{
+  font-weight:900;
+  font-size:20px;
+  line-height:1.05;
+  letter-spacing:.2px;
+}
+.brandTag{
+  font-size:13px;
+  color: rgba(234,242,255,.65);
+  margin-top:4px;
+}
+
+.userPill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(2,6,23,.45);
+  backdrop-filter: blur(10px);
+  color: rgba(234,242,255,.92);
+  font-weight:900;
+  max-width: 190px;
+}
+
+.userPill .icon{
+  width:28px;height:28px;border-radius:999px;
+  display:grid;place-items:center;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  flex:0 0 auto;
+}
+
+.userPill .name{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.userPillBtn{
+  border:none;
+  background: transparent;
+  padding:0;
+  cursor:pointer;
+}
+
+.userMenu{
+  margin-top:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(2,6,23,.55);
+  border-radius:16px;
+  padding:12px;
+}
+.userMenu small{ color: rgba(234,242,255,.65); }
