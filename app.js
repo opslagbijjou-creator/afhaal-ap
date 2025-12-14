@@ -11,21 +11,20 @@ let currentBarcode = null;
 /* ================= HELPERS ================= */
 
 function nameFromEmail(email){
-  if(!email) return "Gebruiker";
+  if(!email) return "Medewerker";
   const base = email.split("@")[0];
   return base
     .replace(/[._-]+/g," ")
     .split(" ")
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .map(w => w[0].toUpperCase()+w.slice(1))
     .join(" ");
 }
 
 /* ================= AUTH ================= */
 
 onAuthStateChanged(auth, user => {
-  if (user) {
-    renderShell(user.email);
-    renderScan();
+  if(user){
+    renderApp(user.email);
   } else {
     renderLogin();
   }
@@ -42,7 +41,7 @@ window.logout = async () => {
   await signOut(auth);
 };
 
-/* ================= UI ================= */
+/* ================= LOGIN ================= */
 
 function renderLogin(){
   root.innerHTML = `
@@ -50,24 +49,26 @@ function renderLogin(){
       <div class="card">
         <h1>Inloggen</h1>
         <input id="email" class="input" placeholder="Email">
-        <input id="password" class="input" type="password" placeholder="Wachtwoord">
+        <input id="password" type="password" class="input" placeholder="Wachtwoord">
         <button class="btn primary" onclick="login()">Inloggen</button>
       </div>
     </div>
   `;
 }
 
-function renderShell(email){
+/* ================= APP SHELL ================= */
+
+function renderApp(email){
   const name = nameFromEmail(email);
 
   root.innerHTML = `
     <div class="container">
 
-      <!-- TOPBAR -->
+      <!-- TOPBAR (ALTIJD ZICHTBAAR) -->
       <div class="topbar">
         <div class="brandLeft">
           <div class="brandMark"></div>
-          <div class="brandText">
+          <div>
             <div class="brandName">Afhaalpunt</div>
             <div class="brandTag">Scan • Opslaan • Afgeven</div>
           </div>
@@ -78,17 +79,18 @@ function renderShell(email){
         </div>
       </div>
 
-      <div id="userMenu" style="display:none" class="card">
-        <div><strong>${name}</strong></div>
+      <div id="userMenu" class="card" style="display:none">
+        <div style="font-weight:900">${name}</div>
         <div style="opacity:.6;font-size:13px">${email}</div>
         <br>
         <button class="btn danger" onclick="logout()">Uitloggen</button>
       </div>
 
+      <!-- PAGE CONTENT -->
       <div id="page"></div>
     </div>
 
-    <!-- NAV -->
+    <!-- BOTTOM NAV -->
     <div class="nav">
       <div class="navInner">
         <button class="navBtn active" onclick="renderScan()">📦 Inscannen</button>
@@ -97,6 +99,8 @@ function renderShell(email){
       </div>
     </div>
   `;
+
+  renderScan(); // 👈 BELANGRIJK
 }
 
 window.toggleMenu = () => {
