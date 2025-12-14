@@ -1,3 +1,1 @@
-import { initAuth } from "./src/core/auth.js";
-
-initAuth();
+import "./src/core/bootstrap.js";
