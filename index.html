@@ -6,8 +6,30 @@
   <title>Afhaalpunt</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <div id="app"></div>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div class="title">Afhaalpunt</div>
+          <div class="subtitle">Scan • Opslaan • Afgeven</div>
+        </div>
+      </div>
+      <span class="pill">👤 medewerker</span>
+    </div>
+
+    <div id="app" class="stack"></div>
+  </div>
+
+  <div class="nav">
+    <div class="navInner">
+      <button class="navBtn active" id="nav-scan" onclick="go('scan')">📦 Inscannen</button>
+      <button class="navBtn" id="nav-pickup" onclick="go('pickup')">✅ Afgeven</button>
+      <button class="navBtn" id="nav-list" onclick="go('list')">📋 Lijst</button>
+    </div>
+  </div>
 
   <!-- Barcode scanner -->
   <script src="https://unpkg.com/@ericblade/quagga2/dist/quagga.js"></script>
