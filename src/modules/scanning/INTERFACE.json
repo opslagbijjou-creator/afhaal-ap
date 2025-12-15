@@ -1,4 +1,0 @@
-{
-  "module": "scanning",
-  "functions": ["lookupByScan"]
-}

@@ -1,4 +1,0 @@
-{
-  "module": "auth",
-  "functions": ["login", "logout", "setRole"]
-}
