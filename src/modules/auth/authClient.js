@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 export function listenAuth(cb) {
   return onAuthStateChanged(auth, cb);
