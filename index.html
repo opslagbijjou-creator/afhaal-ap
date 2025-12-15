@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Afhaalpunt - Login Test</title>
+  </head>
+  <body>
+    <h1>Afhaalpunt – Login test</h1>
+
+    <div id="status">Status: laden...</div>
+
+    <hr />
+
+    <form id="loginForm">
+      <div>
+        <label>Email</label><br />
+        <input id="email" type="email" required />
+      </div>
+
+      <div style="margin-top: 8px;">
+        <label>Wachtwoord</label><br />
+        <input id="password" type="password" required />
+      </div>
+
+      <button style="margin-top: 12px;" type="submit">Inloggen</button>
+      <button style="margin-top: 12px;" id="logoutBtn" type="button">Uitloggen</button>
+    </form>
+
+    <pre id="debug" style="margin-top:16px;"></pre>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
