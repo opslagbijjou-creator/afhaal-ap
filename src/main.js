@@ -7,7 +7,7 @@ const statusEl = document.getElementById("status");
 const debugEl = document.getElementById("debug");
 const form = document.getElementById("loginForm");
 const logoutBtn = document.getElementById("logoutBtn");
-const appRoot = document.getElementById("app"); // <-- komt uit index.html
+const appRoot = document.getElementById("app");
 
 function setStatus(text) {
   statusEl.textContent = `Status: ${text}`;
@@ -18,13 +18,9 @@ function renderAppForUser(user) {
     appRoot.innerHTML = "";
     return;
   }
-
   const role = getRoleForUser(user);
-  if (role === "moderator") {
-    renderModeratorHome(appRoot);
-  } else {
-    renderMedewerkerHome(appRoot);
-  }
+  if (role === "moderator") renderModeratorHome(appRoot);
+  else renderMedewerkerHome(appRoot);
 }
 
 listenAuth((user) => {
@@ -38,7 +34,6 @@ listenAuth((user) => {
   const role = getRoleForUser(user);
   setStatus(`ingelogd als ${user.email} (${role})`);
   debugEl.textContent = JSON.stringify({ uid: user.uid, email: user.email, role }, null, 2);
-
   renderAppForUser(user);
 });
 

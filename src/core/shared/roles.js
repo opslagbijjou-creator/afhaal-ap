@@ -1,9 +1,5 @@
-// TIJDELIJK: dev-rollen via email.
-// In STAP 4 vervangen we dit door Custom Claims via Cloud Functions.
-
 export const MODERATOR_EMAILS = [
-  // zet hier jouw moderator email(s)
-  "mod@thegoat.nl",
+  "folkert@test.nl" // zet hier jouw moderator email
 ];
 
 export function getRoleForUser(user) {
