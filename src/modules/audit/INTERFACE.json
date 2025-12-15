@@ -1,0 +1,4 @@
+{
+  "module": "audit",
+  "functions": ["logEvent", "listEvents"]
+}

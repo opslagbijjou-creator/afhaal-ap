@@ -1,0 +1,4 @@
+{
+  "module": "locations",
+  "functions": ["listRacks", "upsertRack"]
+}
