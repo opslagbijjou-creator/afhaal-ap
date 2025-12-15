@@ -4,33 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Afhaalpunt - Login Test</title>
+    <link rel="stylesheet" href="/src/core/shared/styles.css" />
   </head>
   <body>
-    <h1>Afhaalpunt – Login test</h1>
-
-    <div id="status">Status: laden...</div>
-
-    <hr />
-
-    <form id="loginForm">
+  <div class="container">
+    <div class="topbar">
       <div>
-        <label>Email</label><br />
-        <input id="email" type="email" required />
+        <h1>Afhaalpunt</h1>
+        <p class="small">Login + roltest (moderator / medewerker)</p>
+      </div>
+      <div class="badge" id="status">Status: laden...</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Inloggen</h2>
+
+        <form id="loginForm">
+          <div style="margin-top:10px;">
+            <label>Email</label>
+            <input id="email" class="input" type="email" required />
+          </div>
+
+          <div style="margin-top:10px;">
+            <label>Wachtwoord</label>
+            <input id="password" class="input" type="password" required />
+          </div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit">Inloggen</button>
+            <button class="btn btn-danger" id="logoutBtn" type="button">Uitloggen</button>
+          </div>
+        </form>
+
+        <div class="kv">
+          <span class="small">Debug</span>
+          <span class="small">uid/email/role</span>
+        </div>
+        <pre id="debug"></pre>
       </div>
 
-      <div style="margin-top: 8px;">
-        <label>Wachtwoord</label><br />
-        <input id="password" type="password" required />
+      <div class="card">
+        <h2>App</h2>
+        <p class="small">Na login verschijnt hier je medewerker/moderator menu.</p>
+        <div id="app" style="margin-top:12px;"></div>
       </div>
-
-      <button style="margin-top: 12px;" type="submit">Inloggen</button>
-      <button style="margin-top: 12px;" id="logoutBtn" type="button">Uitloggen</button>
-    </form>
-
-    <pre id="debug" style="margin-top:16px;"></pre>
-    <div id="app" style="margin-top:16px;"></div>
-    <div id="app" style="margin-top:16px;"></div>
+    </div>
 
     <script type="module" src="/src/main.js"></script>
-  </body>
+  </div>
+</body>
 </html>
