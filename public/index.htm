@@ -1,0 +1,94 @@
+// FILE: public/index.html
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Afhaalpunt — Pakket opzoeken</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">📦</div>
+          <div>
+            <div class="brand__title">Afhaalpunt</div>
+            <div class="brand__subtitle">Pakket opzoeken</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1 class="card__title">Barcode lookup</h1>
+        <p class="card__hint">Typ een barcode en klik op <strong>Zoek</strong>.</p>
+
+        <form id="lookupForm" class="form" autocomplete="off">
+          <label class="field">
+            <span class="field__label">Barcode</span>
+            <input
+              id="barcodeInput"
+              class="input"
+              type="text"
+              inputmode="text"
+              placeholder="Bijv. 8712345678901"
+              aria-label="Barcode"
+              required
+            />
+          </label>
+
+          <button id="searchBtn" class="btn btn--primary" type="submit">
+            <span class="btn__text">Zoek</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <div id="alert" class="alert" role="status" aria-live="polite" hidden></div>
+
+        <div id="result" class="result" hidden>
+          <div class="result__header">
+            <h2 class="result__title">Resultaat</h2>
+            <span id="statusPill" class="pill" aria-label="Status"></span>
+          </div>
+
+          <dl class="kv">
+            <div class="kv__row">
+              <dt>Klant</dt>
+              <dd id="customerName">—</dd>
+            </div>
+            <div class="kv__row">
+              <dt>Rack</dt>
+              <dd id="rackCode">—</dd>
+            </div>
+            <div class="kv__row">
+              <dt>Barcode</dt>
+              <dd id="barcodeValue">—</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div id="notFound" class="notfound" hidden>
+          <div class="notfound__box">
+            <div class="notfound__icon" aria-hidden="true">🔎</div>
+            <div>
+              <div class="notfound__title">Niet gevonden</div>
+              <div class="notfound__text">Geen pakket met deze barcode.</div>
+            </div>
+          </div>
+
+          <button class="btn btn--secondary" type="button" disabled title="Fase 2">
+            Nieuw pakket aanmaken (komt in fase 2)
+          </button>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Firebase Hosting + Firestore via Cloud Functions</span>
+      </footer>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
