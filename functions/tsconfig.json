@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "strict": false,
-    "noImplicitAny": false
-  }
-},
-  "include": [
-    "src"
-  ]
