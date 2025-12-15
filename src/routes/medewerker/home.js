@@ -1,24 +1,43 @@
 export function renderMedewerkerHome(root) {
   root.innerHTML = `
-    <h2>Medewerker</h2>
-    <p>Kies actie:</p>
-    <ul>
-      <li><button id="go-inscan">Inscan</button></li>
-      <li><button id="go-ophaal">Ophaal</button></li>
-      <li><button id="go-zoeken">Zoeken</button></li>
-    </ul>
-    <div id="page"></div>
+    <div class="tiles">
+      <div class="tile" id="go-inscan">
+        <div>
+          <div class="tTitle">Inscan</div>
+          <div class="tSub">Pakket binnen → locatie geven</div>
+        </div>
+        <span class="tag">→</span>
+      </div>
+
+      <div class="tile" id="go-ophaal">
+        <div>
+          <div class="tTitle">Ophaal</div>
+          <div class="tSub">Klantcode → direct 1•2•3</div>
+        </div>
+        <span class="tag">→</span>
+      </div>
+
+      <div class="tile" id="go-zoeken">
+        <div>
+          <div class="tTitle">Zoeken</div>
+          <div class="tSub">Fallback op naam / code</div>
+        </div>
+        <span class="tag">→</span>
+      </div>
+    </div>
+
+    <div id="page" style="margin-top:12px;"></div>
   `;
 
   const page = root.querySelector("#page");
 
   root.querySelector("#go-inscan").onclick = () => {
-    page.innerHTML = `<h3>Inscan</h3><p>(komt in volgende stap)</p>`;
+    page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Inscan</h2><p>Komt in volgende stap.</p></div></div>`;
   };
   root.querySelector("#go-ophaal").onclick = () => {
-    page.innerHTML = `<h3>Ophaal</h3><p>(komt in volgende stap)</p>`;
+    page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Ophaal</h2><p>Komt in volgende stap.</p></div></div>`;
   };
   root.querySelector("#go-zoeken").onclick = () => {
-    page.innerHTML = `<h3>Zoeken</h3><p>(fallback zoeken komt later)</p>`;
+    page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Zoeken</h2><p>Komt later.</p></div></div>`;
   };
 }

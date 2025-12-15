@@ -1,32 +1,55 @@
 export function renderModeratorHome(root) {
   root.innerHTML = `
-    <h2>Moderator</h2>
-    <p>Je hebt alle rechten.</p>
+    <div class="tiles">
+      <div class="tile" id="go-inscan">
+        <div>
+          <div class="tTitle">Inscan</div>
+          <div class="tSub">Pakket binnen → locatie geven</div>
+        </div>
+        <span class="tag">→</span>
+      </div>
 
-    <h3>Medewerker acties</h3>
-    <ul>
-      <li><button id="go-inscan">Inscan</button></li>
-      <li><button id="go-ophaal">Ophaal</button></li>
-      <li><button id="go-zoeken">Zoeken</button></li>
-    </ul>
+      <div class="tile" id="go-ophaal">
+        <div>
+          <div class="tTitle">Ophaal</div>
+          <div class="tSub">Klantcode → direct 1•2•3</div>
+        </div>
+        <span class="tag">→</span>
+      </div>
 
-    <h3>Admin</h3>
-    <ul>
-      <li><button id="go-rekken">Rekken beheren</button></li>
-      <li><button id="go-medewerkers">Medewerkers beheren</button></li>
-      <li><button id="go-logs">Logs</button></li>
-    </ul>
+      <div class="tile" id="go-rekken">
+        <div>
+          <div class="tTitle">Rekken</div>
+          <div class="tSub">Beheer rekken / etages / posities</div>
+        </div>
+        <span class="tag">Admin</span>
+      </div>
 
-    <div id="page"></div>
+      <div class="tile" id="go-medewerkers">
+        <div>
+          <div class="tTitle">Medewerkers</div>
+          <div class="tSub">Accounts + rollen</div>
+        </div>
+        <span class="tag">Admin</span>
+      </div>
+
+      <div class="tile" id="go-logs">
+        <div>
+          <div class="tTitle">Logs</div>
+          <div class="tSub">Alles wat ooit gescand/gewijzigd is</div>
+        </div>
+        <span class="tag">Admin</span>
+      </div>
+    </div>
+
+    <div id="page" style="margin-top:12px;"></div>
   `;
 
   const page = root.querySelector("#page");
 
-  root.querySelector("#go-inscan").onclick = () => page.innerHTML = `<h3>Inscan</h3><p>(komt in volgende stap)</p>`;
-  root.querySelector("#go-ophaal").onclick = () => page.innerHTML = `<h3>Ophaal</h3><p>(komt in volgende stap)</p>`;
-  root.querySelector("#go-zoeken").onclick = () => page.innerHTML = `<h3>Zoeken</h3><p>(komt later)</p>`;
-
-  root.querySelector("#go-rekken").onclick = () => page.innerHTML = `<h3>Rekken</h3><p>(rek beheer komt straks)</p>`;
-  root.querySelector("#go-medewerkers").onclick = () => page.innerHTML = `<h3>Medewerkers</h3><p>(rollen via claims komt in STAP 4)</p>`;
-  root.querySelector("#go-logs").onclick = () => page.innerHTML = `<h3>Logs</h3><p>(audit logs komen straks)</p>`;
+  root.querySelector("#go-inscan").onclick = () => page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Inscan</h2><p>Komt in volgende stap.</p></div></div>`;
+  root.querySelector("#go-ophaal").onclick = () => page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Ophaal</h2><p>Komt in volgende stap.</p></div></div>`;
+  root.querySelector("#go-rekken").onclick = () => page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Rekken</h2><p>Komt straks.</p></div></div>`;
+  root.querySelector("#go-medewerkers").onclick = () => page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Medewerkers</h2><p>Komt straks (eerst claims).</p></div></div>`;
+  root.querySelector("#go-logs").onclick = () => page.innerHTML = `<div class="card" style="margin-top:12px;"><div class="cardBody"><h2>Logs</h2><p>Komt straks.</p></div></div>`;
 }

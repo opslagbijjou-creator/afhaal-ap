@@ -7,51 +7,58 @@
     <link rel="stylesheet" href="/src/core/shared/styles.css" />
   </head>
   <body>
-  <div class="container">
-    <div class="topbar">
-      <div>
-        <h1>Afhaalpunt</h1>
-        <p class="small">Login + roltest (moderator / medewerker)</p>
-      </div>
-      <div class="badge" id="status">Status: laden...</div>
-    </div>
+  <div class="shell">
+    <div class="container">
 
-    <div class="grid">
-      <div class="card">
-        <h2>Inloggen</h2>
-
-        <form id="loginForm">
-          <div style="margin-top:10px;">
-            <label>Email</label>
-            <input id="email" class="input" type="email" required />
+      <div class="header">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <h1>Afhaalpunt</h1>
+            <div class="subtitle">Snel zoeken • Rekken • Scannen • Rollen</div>
           </div>
-
-          <div style="margin-top:10px;">
-            <label>Wachtwoord</label>
-            <input id="password" class="input" type="password" required />
-          </div>
-
-          <div class="row">
-            <button class="btn btn-primary" type="submit">Inloggen</button>
-            <button class="btn btn-danger" id="logoutBtn" type="button">Uitloggen</button>
-          </div>
-        </form>
-
-        <div class="kv">
-          <span class="small">Debug</span>
-          <span class="small">uid/email/role</span>
         </div>
-        <pre id="debug"></pre>
+
+        <div class="pill" id="status">Status: laden...</div>
       </div>
 
-      <div class="card">
-        <h2>App</h2>
-        <p class="small">Na login verschijnt hier je medewerker/moderator menu.</p>
-        <div id="app" style="margin-top:12px;"></div>
+      <div class="grid">
+        <div class="card">
+          <div class="cardHead">
+            <h2>Inloggen</h2>
+            <span class="tag">Firebase Auth</span>
+          </div>
+          <div class="cardBody">
+            <form id="loginForm">
+              <label>Email</label>
+              <input id="email" class="input" type="email" required />
+
+              <label>Wachtwoord</label>
+              <input id="password" class="input" type="password" required />
+
+              <div class="row">
+                <button class="btn btnPrimary" type="submit">Inloggen</button>
+                <button class="btn btnDanger" id="logoutBtn" type="button">Uitloggen</button>
+              </div>
+            </form>
+
+            <pre id="debug"></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <h2>Dashboard</h2>
+            <span class="tag">Medewerker / Moderator</span>
+          </div>
+          <div class="cardBody">
+            <div id="app"></div>
+          </div>
+        </div>
       </div>
+
+      <script type="module" src="/src/main.js"></script>
     </div>
-
-    <script type="module" src="/src/main.js"></script>
   </div>
 </body>
 </html>
