@@ -1,4 +1,0 @@
-{
-  "module": "packages",
-  "functions": ["intakeScan", "assignLocation", "assignSubNo", "pickup", "remove"]
-}
