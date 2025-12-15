@@ -1,0 +1,15 @@
+{
+  "module": "audit",
+  "description": "Audit events listing",
+  "functions": [
+    {
+      "name": "listEvents",
+      "input": {
+        "limit": "number"
+      },
+      "output": {
+        "events": "Event[]"
+      }
+    }
+  ]
+}
